@@ -132,21 +132,40 @@ Se han cubierto pruebas para:
 
 ---
 
-## 📂 Estructura del proyecto
+## 📁 Estructura de Carpetas
 
-```
-└── src
-    ├── main
-    │   ├── java/co/com/bancolombia
-    │   │   ├── model                # Entidades y modelos
-    │   │   ├── usecase              # Lógica de negocio
-    │   │   ├── reactiveweb          # Entrypoints (Handler/Router)
-    │   │   └── dynamo               # Driven Adapter
-    └── test
-        ├── usecase
-        ├── dynamo
-        └── reactiveweb
-```
+El proyecto sigue el enfoque de Clean Architecture. A continuación, se describe brevemente la organización de carpetas:
+
+- `domain/`: Contiene los modelos y casos de uso puros.
+- `infrastructure/`: Define adaptadores (por ejemplo, DynamoDB) y puntos de entrada (como controladores web).
+- `deployment/docker`: Configuración para desplegar el entorno local con Docker.
+- Archivos `gradle` y scripts para la compilación del proyecto.
+
+📁 scaffold-quick-start
+├── 📁 .gradle
+├── 📁 .idea
+├── 📁 applications
+├── 📁 build
+├── 📁 build-cache
+├── 📁 deployment
+│   └── 📁 docker
+│       └── 📄 Dockerfile
+├── 📁 domain
+│   ├── 📁 model                        # Entidades y modelos del dominio
+│   └── 📁 usecase                     # Casos de uso del dominio
+├── 📁 gradle
+├── 📁 infrastructure
+│   ├── 📁 driven-adapters             # Adaptadores hacia servicios externos (ej. DynamoDB)
+│   ├── 📁 entry-points                # Controladores y manejadores HTTP
+│   └── 📁 helpers                     # Clases utilitarias o configuraciones adicionales
+├── 📄 .gitignore
+├── 📄 build.gradle
+├── 📄 gradle.properties
+├── 📄 gradlew
+├── 📄 gradlew.bat
+├── 📄 lombok.config
+├── 📄 main.gradle
+└── 📄 README.md
 
 ---
 
