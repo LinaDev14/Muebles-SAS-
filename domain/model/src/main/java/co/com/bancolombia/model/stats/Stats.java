@@ -1,8 +1,6 @@
 package co.com.bancolombia.model.stats;
 import lombok.*;
 
-
-
 @Getter
 @Builder(toBuilder = true)
 public class Stats {

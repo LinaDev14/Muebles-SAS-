@@ -20,8 +20,6 @@ public class DynamoDBTableInitializer {
 
                 dynamoDbAsyncClient.listTables().thenAccept(result -> {
                         if (!result.tableNames().contains(tableName)) {
-                                System.out.println("🛠️ Tabla 'stats' no existe. Creando...");
-
                                 CreateTableRequest request = CreateTableRequest.builder()
                                         .tableName(tableName)
                                         .keySchema(KeySchemaElement.builder()
@@ -38,18 +36,8 @@ public class DynamoDBTableInitializer {
                                                 .build())
                                         .build();
 
-                                dynamoDbAsyncClient.createTable(request).thenAccept(resp ->
-                                        System.out.println(" Tabla 'stats' creada correctamente")
-                                ).exceptionally(ex -> {
-                                        System.err.println(" Error creando la tabla: " + ex.getMessage());
-                                        return null;
-                                });
-                        } else {
-                                System.out.println("✔️ La tabla 'stats' ya existe.");
+                                dynamoDbAsyncClient.createTable(request).exceptionally(ex -> null);
                         }
-                }).exceptionally(ex -> {
-                        System.err.println(" Error verificando tablas: " + ex.getMessage());
-                        return null;
-                });
+                }).exceptionally(ex -> null);
         }
 }

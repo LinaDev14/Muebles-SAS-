@@ -25,9 +25,6 @@ public class StatsUseCase {
                         stats.getMotivoCambio().toString()
                 );
 
-                System.out.println("🧪 keys = " + keys);
-                System.out.println("🧪 expected hash = " + hash);
-
                 return hashValidation.validate(hash, keys)
                         .doOnNext(valid -> System.out.println("✅ isValid = " + valid))
                         .flatMap(isValid -> {
