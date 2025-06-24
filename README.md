@@ -28,7 +28,7 @@ Este proyecto implementa un microservicio reactivo usando el **Scaffold Clean Ar
 ### Clonar el repositorio
 
 ```bash
-https://github.com/LinaDev14/Muebles-SAS-/blob/main/README.md
+https://github.com/LinaDev14/Muebles-SAS-
 cd scaffold-quick-start
 ```
 
