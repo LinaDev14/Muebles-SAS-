@@ -1,47 +1,127 @@
-# Proyecto Base Implementando Clean Architecture
+# 🪑 Muebles SAS - Prueba Técnica
 
-## Antes de Iniciar
+Este proyecto implementa un microservicio reactivo usando el **Scaffold Clean Architecture de Bancolombia**, orientado al manejo de estadísticas de contacto de clientes, persistiendo la información en **DynamoDB Local**, usando **Spring WebFlux** y **Docker Compose**.
 
-Empezaremos por explicar los diferentes componentes del proyectos y partiremos de los componentes externos, continuando con los componentes core de negocio (dominio) y por �ltimo el inicio y configuraci�n de la aplicaci�n.
+---
 
-Lee el art�culo [Clean Architecture � Aislando los detalles](https://medium.com/bancolombia-tech/clean-architecture-aislando-los-detalles-4f9530f35d7a)
+## 🛠️ Tecnologías
 
-# Arquitectura
+- Java 17
+- Spring WebFlux
+- DynamoDB Local
+- Docker Compose
+- Gradle
+- Mockito / JUnit5
+- Clean Architecture (Scaffold Bancolombia)
 
-![Clean Architecture](https://miro.medium.com/max/1400/1*ZdlHz8B0-qu9Y-QO3AXR_w.png)
+---
 
-## Domain
+## 🚀 Cómo ejecutar el servicio
 
-Es el m�dulo m�s interno de la arquitectura, pertenece a la capa del dominio y encapsula la l�gica y reglas del negocio mediante modelos y entidades del dominio.
+### Prerrequisitos
 
-## Usecases
+- JDK 17+
+- Docker y Docker Compose
+- Git
+- Gradle 7.6+
 
-Este m�dulo gradle perteneciente a la capa del dominio, implementa los casos de uso del sistema, define l�gica de aplicaci�n y reacciona a las invocaciones desde el m�dulo de entry points, orquestando los flujos hacia el m�dulo de entities.
+### Clonar el repositorio
 
-## Infrastructure
+```bash
+git clone https://github.com/tuusuario/muebles-sas-prueba.git
+cd muebles-sas-prueba
+```
 
-### Helpers
+### Levantar el entorno con Docker Compose
 
-En el apartado de helpers tendremos utilidades generales para los Driven Adapters y Entry Points.
+```bash
+docker-compose up -d
+```
 
-Estas utilidades no est�n arraigadas a objetos concretos, se realiza el uso de generics para modelar comportamientos
-gen�ricos de los diferentes objetos de persistencia que puedan existir, este tipo de implementaciones se realizan
-basadas en el patr�n de dise�o [Unit of Work y Repository](https://medium.com/@krzychukosobudzki/repository-design-pattern-bc490b256006)
+Esto levantará el contenedor con DynamoDB Local en `localhost:8000`.
 
-Estas clases no puede existir solas y debe heredarse su compartimiento en los **Driven Adapters**
+---
 
-### Driven Adapters
+## ▶️ Ejecutar el servicio
 
-Los driven adapter representan implementaciones externas a nuestro sistema, como lo son conexiones a servicios rest,
-soap, bases de datos, lectura de archivos planos, y en concreto cualquier origen y fuente de datos con la que debamos
-interactuar.
+### Desde terminal
 
-### Entry Points
+```bash
+./gradlew bootRun
+```
 
-Los entry points representan los puntos de entrada de la aplicaci�n o el inicio de los flujos de negocio.
+El servicio quedará disponible en:
 
-## Application
+```
+http://localhost:8080/api/stats
+```
 
-Este m�dulo es el m�s externo de la arquitectura, es el encargado de ensamblar los distintos m�dulos, resolver las dependencias y crear los beans de los casos de use (UseCases) de forma autom�tica, inyectando en �stos instancias concretas de las dependencias declaradas. Adem�s inicia la aplicaci�n (es el �nico m�dulo del proyecto donde encontraremos la funci�n �public static void main(String[] args)�.
+---
 
-**Los beans de los casos de uso se disponibilizan automaticamente gracias a un '@ComponentScan' ubicado en esta capa.**
+## 📬 Probar el endpoint
+
+Puedes usar Postman o cURL. Aquí un ejemplo con cURL:
+
+```bash
+curl --location 'http://localhost:8080/api/stats' --header 'Content-Type: application/json' --data '{
+  "timestamp": "2025-06-23T18:00:00",
+  "totalContactoClientes": 250,
+  "motivoReclamo": 25,
+  "motivoGarantia": 10,
+  "motivoDuda": 100,
+  "motivoCompra": 100,
+  "motivoFelicitaciones": 7,
+  "motivoCambio": 8,
+  "hash": "5484062a4be1ce5645eb414663e14f59"
+}'
+```
+
+---
+
+## ✅ Ejecutar pruebas unitarias
+
+```bash
+./gradlew test
+```
+
+Se han cubierto pruebas para:
+
+- Casos de uso (`StatsUseCase`)
+- Adaptadores (`StatsRepositoryAdapter`)
+- Entrypoints (`StatsHandler`)
+- Errores y validaciones
+
+---
+
+## 📂 Estructura del proyecto
+
+```
+└── src
+    ├── main
+    │   ├── java/co/com/bancolombia
+    │   │   ├── model                # Entidades y modelos
+    │   │   ├── usecase              # Lógica de negocio
+    │   │   ├── reactiveweb          # Entrypoints (Handler/Router)
+    │   │   └── dynamo               # Driven Adapter
+    └── test
+        ├── usecase
+        ├── dynamo
+        └── reactiveweb
+```
+
+---
+
+## 🧪 Cobertura mínima del 70%
+
+Se garantiza al menos el 70% de cobertura en pruebas unitarias.
+
+---
+
+## 🤝 Autor
+
+Lina María Guerrero López
+
+---
+
+¡Gracias por revisar este proyecto!
+
