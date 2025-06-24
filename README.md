@@ -55,7 +55,46 @@ El servicio quedará disponible en:
 ```
 http://localhost:8080/api/stats
 ```
+---
 
+## 🔐 Verificación de Hash
+
+El `hash` debe ser generado como una verificación MD5 del contenido del JSON sin incluir el campo `hash`. El orden de los campos debe ser el mismo.
+
+### ¿Cómo se genera?
+
+```bash
+echo -n '{"timestamp":"2025-06-23T18:00:00","totalContactoClientes":250,"motivoReclamo":10,"motivoGarantia":5,"motivoDuda":20,"motivoCompra":200,"motivoFelicitaciones":8,"motivoCambio":7}' | md5sum
+```
+
+Este valor se coloca en el campo `"hash"` del request.
+
+---
+
+## ⚠️ Error común con DynamoDB Local
+
+### Error:
+
+```
+The Access Key ID or Security Token is Invalid
+```
+
+### Causa:
+
+Desde la versión 2.0.0 de DynamoDB Local, las claves de acceso **deben ser alfanuméricas** (sin guiones ni símbolos especiales).
+
+### Solución:
+
+Utiliza claves como estas en tu configuración:
+
+```bash
+AWS_ACCESS_KEY_ID=localaccess123
+AWS_SECRET_ACCESS_KEY=localsecret123
+```
+
+Evita usar caracteres especiales. Si usas Docker, asegúrate de incluir estas variables correctamente o usar `StaticCredentialsProvider` con claves dummy.
+
+---
 ---
 
 ## 📬 Probar el endpoint
